@@ -25,11 +25,11 @@ public class ApiTest {
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     // 请求
     HttpGet get =
-        new HttpGet("https://api.zsxq.com/v2/groups/28885518425541/topics?scope=all&count=20");
+        new HttpGet("https://api.zsxq.com/v2/groups/28885518425541/topics?scope=all&count=1");
     // 请求头
     get.addHeader(
         HttpHeaders.COOKIE,
-        "zsxq_access_token=CED499E6-8AC6-CB62-4965-1F35BDF95C02_0E12B3D505223D91; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22815515128582112%22%2C%22first_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTg4Y2E2ZWJjZDYxZjBkLTBkMTFlOGQyYjMxODNiLTI2MDMxZDUxLTIwNzM2MDAtMTg4Y2E2ZWJjZDcxY2FkIiwiJGlkZW50aXR5X2xvZ2luX2lkIjoiODE1NTE1MTI4NTgyMTEyIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%22815515128582112%22%7D%2C%22%24device_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%7D; zsxqsessionid=47155d21bfe565f78ef23f21dd606879; abtest_env=product");
+        "zsxq_access_token=CED499E6-8AC6-CB62-4965-1F35BDF95C02_0E12B3D505223D91; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22815515128582112%22%2C%22first_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTg4Y2E2ZWJjZDYxZjBkLTBkMTFlOGQyYjMxODNiLTI2MDMxZDUxLTIwNzM2MDAtMTg4Y2E2ZWJjZDcxY2FkIiwiJGlkZW50aXR5X2xvZ2luX2lkIjoiODE1NTE1MTI4NTgyMTEyIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%22815515128582112%22%7D%2C%22%24device_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%7D; abtest_env=product; zsxqsessionid=9bfcd3e38bfe05da0aa165b6a75e25e9");
     get.addHeader(
         HttpHeaders.USER_AGENT,
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36");
@@ -50,14 +50,9 @@ public class ApiTest {
   public void comment() throws IOException, ParseException {
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-    HttpPost post = new HttpPost("https://api.zsxq.com/v2/topics/2855812585251251/comments");
-    post.setHeader(
-        HttpHeaders.COOKIE,
-        "zsxq_access_token=CED499E6-8AC6-CB62-4965-1F35BDF95C02_0E12B3D505223D91; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22815515128582112%22%2C%22first_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTg4Y2E2ZWJjZDYxZjBkLTBkMTFlOGQyYjMxODNiLTI2MDMxZDUxLTIwNzM2MDAtMTg4Y2E2ZWJjZDcxY2FkIiwiJGlkZW50aXR5X2xvZ2luX2lkIjoiODE1NTE1MTI4NTgyMTEyIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%22815515128582112%22%7D%2C%22%24device_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%7D; zsxqsessionid=47155d21bfe565f78ef23f21dd606879; abtest_env=product");
-    HttpEntity entity =
-        new StringEntity(
-            "{\"req_data\":{\"text\":\"测试评论-等于回答\\n\",\"image_ids\":[],\"mentioned_user_ids\":[]}}",
-            ContentType.APPLICATION_JSON);
+    HttpPost post = new HttpPost("https://api.zsxq.com/v2/topics/2855812585421281/comments");
+    post.setHeader(HttpHeaders.COOKIE, "zsxq_access_token=CED499E6-8AC6-CB62-4965-1F35BDF95C02_0E12B3D505223D91; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22815515128582112%22%2C%22first_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_referrer%22%3A%22%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTg4Y2E2ZWJjZDYxZjBkLTBkMTFlOGQyYjMxODNiLTI2MDMxZDUxLTIwNzM2MDAtMTg4Y2E2ZWJjZDcxY2FkIiwiJGlkZW50aXR5X2xvZ2luX2lkIjoiODE1NTE1MTI4NTgyMTEyIn0%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%24identity_login_id%22%2C%22value%22%3A%22815515128582112%22%7D%2C%22%24device_id%22%3A%22188ca6ebcd61f0d-0d11e8d2b3183b-26031d51-2073600-188ca6ebcd71cad%22%7D; zsxqsessionid=47155d21bfe565f78ef23f21dd606879; abtest_env=product");
+    HttpEntity entity = new StringEntity("{\"req_data\":{\"text\":\"测试评论-等于回答\\n\",\"image_ids\":[],\"mentioned_user_ids\":[]}}", ContentType.APPLICATION_JSON);
     post.setEntity(entity);
     CloseableHttpResponse response = httpClient.execute(post);
     response.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString());

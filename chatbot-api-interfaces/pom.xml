@@ -69,17 +69,13 @@
             <artifactId>json-lib</artifactId>
             <classifier>jdk15</classifier><!-- jdk版本 -->
         </dependency>
-        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-
+        <!-- chatbot-api-domain -->
         <dependency>
             <groupId>com.doublew2w.ai</groupId>
             <artifactId>chatbot-api-domain</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- chatbot-api-application -->
         <dependency>
             <groupId>com.doublew2w.ai</groupId>
             <artifactId>chatbot-api-application</artifactId>
