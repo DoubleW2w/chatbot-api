@@ -25,3 +25,5 @@ replay_pid*
 
 .idea/
 *.iml
+# 忽略根目录下子一级目录下的target目录
+*/target/
