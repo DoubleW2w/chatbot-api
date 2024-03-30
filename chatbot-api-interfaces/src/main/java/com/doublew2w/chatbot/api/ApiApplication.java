@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date: 2024/3/28 0:56
  * @project: chatbot-api
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.doublew2w.chatbot.api")
 public class ApiApplication {
   public static void main(String[] args) {
     SpringApplication.run(ApiApplication.class, args);

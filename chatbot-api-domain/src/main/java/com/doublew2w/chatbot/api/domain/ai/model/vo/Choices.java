@@ -1,0 +1,42 @@
+package com.doublew2w.chatbot.api.domain.ai.model.vo;
+
+/**
+ * @author: DoubleW2w
+ * @description:
+ * @date: 2024/3/30 20:22
+ * @project: chatbot-api
+ */
+public class Choices {
+    private int index;
+
+    private Message message;
+
+    private String logprobs;
+
+    private String finish_reason;
+
+    public void setIndex(int index){
+        this.index = index;
+    }
+    public int getIndex(){
+        return this.index;
+    }
+    public void setMessage(Message message){
+        this.message = message;
+    }
+    public Message getMessage(){
+        return this.message;
+    }
+    public void setLogprobs(String logprobs){
+        this.logprobs = logprobs;
+    }
+    public String getLogprobs(){
+        return this.logprobs;
+    }
+    public void setFinish_reason(String finish_reason){
+        this.finish_reason = finish_reason;
+    }
+    public String getFinish_reason(){
+        return this.finish_reason;
+    }
+}
