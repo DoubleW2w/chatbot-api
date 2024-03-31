@@ -1,6 +1,8 @@
 package com.doublew2w.chatbot.api.domain.zsxq.model.res;
 
 import com.doublew2w.chatbot.api.domain.zsxq.model.vo.Comment;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: DoubleW2w
@@ -8,14 +10,8 @@ import com.doublew2w.chatbot.api.domain.zsxq.model.vo.Comment;
  * @date: 2024/3/30 2:14
  * @project: chatbot-api
  */
+@Setter
+@Getter
 public class CommentResData {
   private Comment comment;
-
-  public void setComment(Comment comment) {
-    this.comment = comment;
-  }
-
-  public Comment getComment() {
-    return comment;
-  }
 }

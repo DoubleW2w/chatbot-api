@@ -1,6 +1,8 @@
 package com.doublew2w.chatbot.api.domain.zsxq.model.req;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: DoubleW2w
@@ -8,6 +10,8 @@ import com.fasterxml.jackson.annotation.*;
  * @date: 2024/3/30 2:10
  * @project: chatbot-api
  */
+@Setter
+@Getter
 public class CommentReq {
   @JsonIgnore private String cookie;
   @JsonIgnore private String topicId;
@@ -15,28 +19,4 @@ public class CommentReq {
   @JsonAlias("req_data")
   @JsonProperty("req_data")
   private CommentReqData commentReqData;
-
-  public String getCookie() {
-    return cookie;
-  }
-
-  public void setCookie(String cookie) {
-    this.cookie = cookie;
-  }
-
-  public String getTopicId() {
-    return topicId;
-  }
-
-  public void setTopicId(String topicId) {
-    this.topicId = topicId;
-  }
-
-  public void setCommentReqData(CommentReqData commentReqData) {
-    this.commentReqData = commentReqData;
-  }
-
-  public CommentReqData getCommentReqData() {
-    return commentReqData;
-  }
 }

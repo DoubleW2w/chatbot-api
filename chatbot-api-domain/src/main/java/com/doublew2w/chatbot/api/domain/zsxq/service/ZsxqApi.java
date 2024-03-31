@@ -6,9 +6,8 @@ import com.doublew2w.chatbot.api.domain.zsxq.IZsxqApi;
 import com.doublew2w.chatbot.api.domain.zsxq.model.aggregates.QueryTopicsAggregates;
 import com.doublew2w.chatbot.api.domain.zsxq.model.req.CommentReq;
 import com.doublew2w.chatbot.api.domain.zsxq.model.req.TopicsReq;
-import java.io.IOException;
-
 import com.doublew2w.chatbot.api.domain.zsxq.model.res.CommentRes;
+import java.io.IOException;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -19,6 +18,7 @@ import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.*;
+import org.apache.hc.core5.http.message.BasicHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,8 +37,10 @@ public class ZsxqApi implements IZsxqApi {
   @Override
   public QueryTopicsAggregates queryTopicsAggregates(TopicsReq req)
       throws IOException, ParseException {
+
     // 请求客户端
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
     // 请求
     String getUrl =
         StrUtil.format(
@@ -48,22 +50,24 @@ public class ZsxqApi implements IZsxqApi {
             req.getCount());
     logger.info("requestUrl:{}", getUrl);
     HttpGet get = new HttpGet(getUrl);
+
     // 请求头
-    get.addHeader(HttpHeaders.COOKIE, req.getCookie());
-    get.addHeader(
-        HttpHeaders.USER_AGENT,
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36");
+    get.setHeaders(
+        new BasicHeader(HttpHeaders.COOKIE, req.getCookie()),
+        new BasicHeader(
+            HttpHeaders.USER_AGENT,
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"));
     // 响应
     CloseableHttpResponse response = httpClient.execute(get);
     // 响应头
-    response.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString());
+    response.setHeaders(
+        new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()));
     if (response.getCode() == HttpStatus.SC_OK) {
       String jsonStr = EntityUtils.toString(response.getEntity());
-      logger.info("拉取提问数据。groupId：{} jsonStr：{}", req.getGroupId(), jsonStr);
       return JSON.parseObject(jsonStr, QueryTopicsAggregates.class);
     } else {
       throw new RuntimeException(
-          "queryUnAnsweredQuestionsTopicId Err Code is " + response.getCode());
+          "查询评论数据失败，响应码为: " + response.getCode());
     }
   }
 

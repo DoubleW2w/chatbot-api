@@ -1,5 +1,6 @@
 package com.doublew2w.chatboi.api.test;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.doublew2w.chatbot.api.ApiApplication;
 import com.doublew2w.chatbot.api.domain.ai.service.OpenAI;
@@ -13,17 +14,16 @@ import com.doublew2w.chatbot.api.domain.zsxq.model.vo.Owner;
 import com.doublew2w.chatbot.api.domain.zsxq.model.vo.Talk;
 import com.doublew2w.chatbot.api.domain.zsxq.model.vo.Topics;
 import com.doublew2w.chatbot.api.domain.zsxq.service.ZsxqApi;
+import java.io.IOException;
+import java.util.List;
+import javax.annotation.Resource;
 import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * @author: DoubleW2w
@@ -32,6 +32,7 @@ import java.util.List;
  * @project: chatbot-api
  */
 @SpringBootTest(classes = ApiApplication.class)
+@ActiveProfiles("dev") // 指定dev配置文件
 public class SpringBootRunTest {
 
   private final Logger logger = LoggerFactory.getLogger(SpringBootRunTest.class);
@@ -59,12 +60,12 @@ public class SpringBootRunTest {
     topicsReq.setGroupId(groupId);
     topicsReq.setCount(20);
     QueryTopicsAggregates queryTopicsAggregates = zsxqApi.queryTopicsAggregates(topicsReq);
-    if (!queryTopicsAggregates.getSucceeded()) {
-      logger.warn("查询主题数据失败");
+    if (!queryTopicsAggregates.isSucceeded()) {
       logger.info("测试结果：{}", JSON.toJSONString(queryTopicsAggregates));
     }
     TopicsResData topicsResData = queryTopicsAggregates.getTopicsResData();
     if (topicsResData == null) {
+      logger.warn("不存在评论数据");
       return;
     }
     List<Topics> topics = topicsResData.getTopics();
@@ -76,29 +77,29 @@ public class SpringBootRunTest {
       }
       String text = talk.getText();
       Owner owner = talk.getOwner();
-      if (owner == null) {
+      // 发布人是当前用户才行
+      if (owner == null || !owner.getUserId().equals(userId)) {
         continue;
       }
-      if (!owner.getUserId().equals(userId)) {
-        continue;
-      }
-      logger.info("topicId：{} text：{},owner:{}", topicId, text, JSON.toJSONString(owner));
+      // 当前评论艾特当前用户，最多回答两次
+      if (StrUtil.isNotBlank(text)
+          && text.contains("type=\"mention\" uid=\"815515128582112\"")
+          && topic.getCommentsCount() < 2) {
+        logger.info("topicId：{} text：{},owner:{}", topicId, text, JSON.toJSONString(owner));
 
-      CommentReq commentReq = new CommentReq();
-      commentReq.setCookie(cookie);
-      commentReq.setTopicId(topicId);
-      CommentReqData commentReqData = new CommentReqData();
-      commentReqData.setText("你好，这是测试回答评论");
-      commentReqData.setImageIds(new ArrayList<>());
-      commentReqData.setMentionedUserIds(new ArrayList<>());
-      commentReq.setCommentReqData(commentReqData);
-      CommentRes answerRes = zsxqApi.commentTopic(commentReq);
+        CommentReq commentReq = new CommentReq();
+        commentReq.setCookie(cookie);
+        commentReq.setTopicId(topicId);
+        CommentReqData commentReqData = new CommentReqData();
+        commentReqData.setText("你好，这是测试回答评论");
+        commentReq.setCommentReqData(commentReqData);
+        CommentRes answerRes = zsxqApi.commentTopic(commentReq);
 
-      if (answerRes.isSucceeded()) {
-        logger.info("测试评论回答成功");
-        logger.info("评论回答响应:{}", JSON.toJSONString(answerRes.getCommentResData()));
-      } else {
-        logger.error("测试评论回答结果失败");
+        if (answerRes.isSucceeded()) {
+          logger.info("评论回答响应:{}", JSON.toJSONString(answerRes.getCommentResData()));
+        } else {
+          logger.error("测试评论回答结果失败");
+        }
       }
     }
   }

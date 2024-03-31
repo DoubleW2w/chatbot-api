@@ -1,8 +1,8 @@
 package com.doublew2w.chatbot.api.domain.zsxq.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: DoubleW2w
@@ -10,46 +10,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @date: 2024/3/30 1:52
  * @project: chatbot-api
  */
+@Setter
+@Getter
 public class Owner {
+  /** 用户id */
   @JsonAlias({"user_id", "userId"})
   private String userId;
 
+  /** 用户名称 */
   private String name;
 
+  /** 用户头像url */
   @JsonAlias({"avatar_url", "avatarUrl"})
   private String avatarUrl;
 
+  /** 用户地理位置 */
   private String location;
-
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
-
-  public String getUserId() {
-    return userId;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setAvatarUrl(String avatarUrl) {
-    this.avatarUrl = avatarUrl;
-  }
-
-  public String getAvatarUrl() {
-    return avatarUrl;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public String getLocation() {
-    return location;
-  }
 }
